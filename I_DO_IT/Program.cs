@@ -10,77 +10,72 @@ namespace I_DO_IT
     {
         static void Main(string[] args)
         {
-            string userInput;
-            int operandA, operandB;
-            int summ;
-            string action;
-            int numberAction;
+            int operandA = 0, operandB = 0;
+            string action = "";
+            int numberAction = 0;
+            int expectedResult = 0;
+            
+            Random random = new Random(DateTime.Now.Millisecond);
 
-            Random random = new Random();
-            operandA = random.Next(0, 10 + 1);
-            operandB = random.Next(0, 10 + 1);
-            numberAction = random.Next(0, 3 + 1);
-            int result = operandB + operandA;
-            bool isWork = true;
+            bool userWasRight = true;
+            bool userWantsToContinue = true;
 
-            while (isWork == true)
+            while (userWantsToContinue)
             {
-                operandA = random.Next(0, 10 + 1);
-                operandB = random.Next(0, 10 + 1);
-                numberAction = random.Next(0, 3 + 1);
-                Console.WriteLine($"1 Число {operandA} ");
-                switch (action)
+                if (userWasRight)
                 {
-                    case "-":
-                        if (numberAction == 0)
-                        {
-                            action = "-";
-                        }
-                        break;
-                    case "+":
-                        if (numberAction == 1)
-                        {
-                            action = "-";
-                        }
-                        break;
-                    case "*":
-                        if (numberAction == 2)
-                        {
-                            action = "-";
-                        }
-                        break;
-                    case "/":
-                        if (numberAction == 3)
-                        {
-                            action = "-";
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                Console.WriteLine(action);
-                Console.WriteLine($"2 Число {operandB} ");
+                    operandA = random.Next(0, 10 + 1);
+                    operandB = random.Next(0, 10 + 1);
 
-                summ = int.Parse(Console.ReadLine());
-                if (summ == result)
-                {
-                    Console.WriteLine("Верно");
-                }
-                else
-                {
-                    if (summ != result)
+                    numberAction = random.Next(0, 4);
+
+                    switch (numberAction)
                     {
-                        Console.WriteLine("Неправильно попробуй еще раз");
+                        case 0:
+                            action = "+";
+                            expectedResult = operandA + operandB;
+                            break;
+                        case 1:
+                            action = "-";
+                            expectedResult = operandA - operandB;
+                            break;
+                        case 2:
+                            action = "*";
+                            expectedResult = operandA * operandB;
+                            break;
+                        case 3:
+                            action = "/";
+                            expectedResult = operandA / operandB;
+                            break;
+                        default:
+                            action = "";
+                            expectedResult = 0;
+                            break;
                     }
                 }
 
+                Console.Write($"Сколько будет {operandA} {action} {operandB} = ");
+
+                int userInputInt = int.Parse(Console.ReadLine());
+                if (expectedResult == userInputInt)
+                {
+                    Console.WriteLine("Верно");
+                    userWasRight = true;
+                }
+                else
+                {
+                    Console.Write("Неправильно!");
+                    userWasRight = false;
+                }
+
+                Console.Write("Хотите продолжить (y/n)?: ");
+                string userInput = Console.ReadLine();
+                if (userInput == "n")
+                {
+                    userWantsToContinue = false;
+                }
             }
-            Console.WriteLine($"Хотите продолжить ?");
-            userInput = Console.ReadLine();
-            if (userInput == "нет")
-            {
-                isWork = false;
-            }
+            
             Console.ReadKey();
         }
     }
